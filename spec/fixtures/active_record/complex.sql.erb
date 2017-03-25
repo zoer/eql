@@ -1,0 +1,4 @@
+SELECT <%= shift %> AS num
+<% each do |num| %>
+  <%= render(:partial, num: num, name: 'num') %>
+<% end %>
