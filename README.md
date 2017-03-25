@@ -20,17 +20,17 @@ gem 'eql'
 ### Simple usage
 
 ```erb
-# queries/update.sql.erb
+# queries/insert.sql.erb
 <% each do |item| %>
   INSERT INTO items (category, name)
-    VALUES (<%= item.values_at(:category, :name).map { |i| quote(i) }.join(', ')) %>
-    ON CONFILICT (category, name) DO NOTHING
+    VALUES (<%= item.values_at(:category, :name).map { |i| quote(i) }.join(', ') %>)
+    ON CONFILICT (category, name) DO NOTHING;
 <% end %>
 ```
 
 ```ruby
 b = Eql.new('queries')
-b.execute(update, [{category: 'cars', name: 'BMW'}, {category: 'cars', name: 'AUDI'}])
+b.execute(:insert, [{category: 'cars', name: 'BMW'}, {category: 'cars', name: 'AUDI'}])
 ```
 
 ### Inline templates
@@ -41,7 +41,7 @@ b = Eql.template <<-ERB
     FROM customer c
       LEFT JOIN products p ON (c.id = p.customer_id)
     WHERE c.id = <%= quote(id) %>
-ERD
+ERB
 b.execute_params(id: 74)
 ```
 
@@ -70,7 +70,7 @@ SELECT *
 
 ### Create your own adapter
 
-```
+```ruby
 class BashAdapter < Eql::Adapters::Base
   def self.match?(conn)
     conn == :my_bash
@@ -97,7 +97,7 @@ b.template <<-COMMAND
   ls folder/*
 COMMAND
 b.execute_params(folder: 'units')
-``
+```
 
 ### Adapters
 Now implemented only `ActiveRecord` adapter. Please, fill free to contribute on

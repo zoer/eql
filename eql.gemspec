@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['oazoer@gmail.com']
 
   spec.summary       = 'Erb Query Language'
-  spec.description   = 'Create a raw query to your DB via ERB templates'
+  spec.description   = 'Erb provides an ability to use ERB templates with your DB queries'
   spec.license       = 'MIT'
 
   spec.files         = Dir.glob("{lib}/**/*") + %w[LICENSE.txt README.md]
