@@ -25,7 +25,7 @@ module Eql
     #
     # @return [String] returns rendered template
     #
-    def render(tmpl, params = nil)
+    def render(tmpl, params = @params)
       b = @builder.clone
       b.load(tmpl, params)
       b.render

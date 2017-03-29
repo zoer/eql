@@ -24,7 +24,8 @@ RSpec.describe Eql::Proxy do
   describe '.render' do
     let(:builder) { double('Builder') }
     let(:cloned) { double('Builder') }
-    let(:proxy) { klass.new(builder, nil) }
+    let(:proxy) { klass.new(builder, params) }
+    let(:params) { { y: 2 } }
 
     before(:example) do
       proxy.instance_variable_set(:@builder, builder)
@@ -35,6 +36,13 @@ RSpec.describe Eql::Proxy do
       expect(cloned).to receive(:load).with(:name, {x: 1})
       expect(cloned).to receive(:render)
       proxy.render(:name, x: 1)
+    end
+
+    it 'should params from parent builder if they are not explicitly given' do
+      expect(builder).to receive(:clone) { cloned }
+      expect(cloned).to receive(:load).with(:name, params)
+      expect(cloned).to receive(:render)
+      proxy.render(:name)
     end
   end
 
