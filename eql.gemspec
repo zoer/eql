@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Oleg Yashchuk']
   spec.email         = ['oazoer@gmail.com']
 
-  spec.summary       = 'Erb Query Language'
-  spec.description   = 'Erb provides an ability to use ERB templates with your DB queries'
+  spec.summary       = 'Eql Query Language'
+  spec.description   = 'Eql provides an ability to use ERB templates with your DB queries'
   spec.license       = 'MIT'
 
   spec.files         = Dir.glob("{lib}/**/*") + %w[LICENSE.txt README.md]
