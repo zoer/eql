@@ -34,7 +34,14 @@ module Eql
     # @param [String, Symbol] name template's name
     #
     def load_template(name)
-      @template_content = File.read(resolve_path(name))
+      @template_content = loader.load_template(name)
+    end
+
+    #
+    # @return [Eql::TemplateLoader]
+    #
+    def loader
+      @loader ||= TemplateLoader.new(self)
     end
 
     #
@@ -73,12 +80,6 @@ module Eql
       @template_content.to_s
     end
 
-    class H < Hash
-      def name
-        :h
-      end
-    end
-
     #
     # Render a template
     #
@@ -95,33 +96,6 @@ module Eql
     #
     def proxy_class
       Eql::Proxy.generate(adapter)
-    end
-
-    #
-    # File template to find
-    #
-    # @param [String, Symbol] file template's name
-    #
-    # @return [String] returns file path pattern
-    #
-    def template_path(file)
-      File.join(@path.to_s, file.to_s) + adapter.extension
-    end
-
-    #
-    # Resolve file's path
-    #
-    # @raise [RuntimeError] when can't wind a file
-    #
-    # @param [String] file template's name
-    #
-    # @return [String] returns template's path
-    #
-    def resolve_path(file)
-      path = template_path(file)
-      Dir.glob(path).first.tap do |f|
-        raise "Unable to find query template with #{path.inspect} location" unless f
-      end
     end
 
     def method_missing(name, *args, &block)

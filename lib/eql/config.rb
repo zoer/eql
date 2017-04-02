@@ -3,13 +3,24 @@ module Eql
   # Config class holds rendering settings
   #
   class Config
-    # @param [String]
+    # @return [String] returns default templates folder
     attr_accessor :path
-    # @param [Symbol]
+    # @return [Symbol] returns key of default adapter
     attr_accessor :adapter
+    attr_writer :cache_templates
 
     def initialize
-      @adapter = :active_record
+      @adapter         = :active_record
+      @cache_templates = true
+    end
+
+    #
+    # Should templates be cached?
+    #
+    # @return [Boolean]
+    #
+    def cache_templates?
+      @cache_templates
     end
 
     #

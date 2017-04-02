@@ -1,4 +1,5 @@
 require 'erb'
+require 'forwardable'
 
 #
 # Eql module renders ERB query templates and runs them
@@ -78,6 +79,7 @@ end
   config
   proxy
   builder
+  template_loader
   adapter_factory
   adapters/base
   adapters/active_record

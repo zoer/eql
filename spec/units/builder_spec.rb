@@ -5,6 +5,8 @@ RSpec.describe Eql::Builder do
   let(:conn) {}
   let(:builder) { described_class.new(path, conn) }
 
+  before(:example) { Eql::TemplateLoader.cache.clear }
+
   describe '#load_template' do
     it 'should load template form a file' do
       builder.load_template(:simple)
@@ -108,21 +110,6 @@ RSpec.describe Eql::Builder do
     end
   end
 
-  describe '#resolve_path' do
-    let(:adapter) { double(extension: '.{erb,sql.erb}') }
-
-    before(:example) { allow(builder).to receive(:adapter) { adapter } }
-
-    it "should resolve template's path" do
-      expect(builder.resolve_path(:simple)).to eq \
-        File.expand_path('../../fixtures/active_record/simple.sql.erb', __FILE__)
-    end
-
-    it "should raise an error if can find tempale's file" do
-      expect { builder.resolve_path(:unexisted) }.to raise_error(/unable to find/i)
-    end
-  end
-
   describe '#clone' do
     let(:cloned) { builder.clone }
     let(:conn) { double }
@@ -133,5 +120,16 @@ RSpec.describe Eql::Builder do
       expect(cloned.path).to eq builder.path
       expect(cloned.conn).to eq builder.conn
     end
+  end
+
+  it '#builder' do
+    expect(builder.loader).to be_a Eql::TemplateLoader
+    expect(builder.loader.builder).to eq builder
+  end
+
+  it '#load_template' do
+    expect(builder.loader).to receive(:load_template).with(:simple) { 'foo' }
+    expect(builder.load_template(:simple)).to eq 'foo'
+    expect(builder.template_content).to eq 'foo'
   end
 end
