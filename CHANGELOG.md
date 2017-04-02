@@ -1,3 +1,7 @@
+### 0.0.4
+
+* Fix Ruby 2.4.0 related error
+
 ### 0.0.3 - 2017-04-02
 
 * Cache templates

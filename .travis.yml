@@ -5,5 +5,4 @@ rvm:
   - 2.2.6
   - 2.3.3
   - 2.4.0
-  - tip
 before_install: gem install bundler

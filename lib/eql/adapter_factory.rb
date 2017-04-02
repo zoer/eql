@@ -52,9 +52,11 @@ module Eql
       #
       def factory(conn)
         return Eql.config.default_adapter unless conn
-        adapters.values.find { |a| a.match?(conn) if a.respond_to?(:match?) }.tap do |adapter|
-          raise "Unable to detect adapter for #{conn.inspect}" unless adapter
+        adapter = adapters.values.find do |a|
+          a.match?(conn) if a.is_a?(Class) && a.respond_to?(:match?)
         end
+        raise "Unable to detect adapter for #{conn.inspect}" unless adapter
+        adapter
       end
     end
   end
