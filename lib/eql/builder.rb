@@ -106,7 +106,7 @@ module Eql
     # Execute template query
     #
     # @param [String, Symbol] tmpl template's name
-    # @param [Object, nil] params o
+    # @param [Object, nil] params query params
     #
     # @return [Object] returns execution results
     #
