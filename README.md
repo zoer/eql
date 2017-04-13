@@ -53,6 +53,7 @@ b.execute_params(id: 74)
 Eql.configure do |config|
   config.path = Rails.root.join('app/queries')
   config.adapter = :active_record
+  config.cache_templates = !Rails.env.development?
 end
 ```
 
