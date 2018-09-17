@@ -50,13 +50,12 @@ module Eql
     #
     # @param [String, Symbol] file template's name
     #
-    # @return [String] returns file path pattern
+    # @return [Array<String>] returns file path pattern
     #
     def template_path(file)
-      [
-        File.join(@builder.path.to_s, file.to_s),
-        @builder.adapter.extension
-      ].join
+      @builder.path.map do |path|
+        [File.join(path, file.to_s), @builder.adapter.extension].join
+      end
     end
 
     #
@@ -71,10 +70,14 @@ module Eql
     # @return [String] returns template's path
     #
     def resolve_path(file)
-      path = template_path(file)
-      Dir.glob(path).first.tap do |f|
-        raise "Unable to find query template with #{path.inspect} location" unless f
+      paths = template_path(file)
+
+      paths.each do |path|
+        filepath = Dir.glob(path).first
+        return filepath if filepath.present?
       end
+
+      raise "Unable to find query template with #{paths.inspect} location"
     end
 
     #

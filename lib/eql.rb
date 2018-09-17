@@ -9,7 +9,7 @@ module Eql
     #
     # Create new builder
     #
-    # @param [String, nil] path template's root folder
+    # @param [Array<String>, String, nil] path template's root folder
     # @param [Object, nil] conn DB connection or cursor
     #
     def new(path = nil, conn = nil)

@@ -9,12 +9,12 @@ RSpec.describe Eql do
     it 'should not raise errors without params' do
       b = mod.new
       expect(b).to be_a Eql::Builder
-      expect(b.path).to eq Eql.config.path
+      expect(b.path).to eq [Eql.config.path]
     end
 
     it 'should pass params to a builder' do
       b = mod.new('foo', :conn)
-      expect(b.path).to eq 'foo'
+      expect(b.path).to eq ['foo']
       expect(b.conn).to eq :conn
     end
   end

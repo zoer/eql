@@ -9,11 +9,11 @@ module Eql
     attr_reader :conn
 
     #
-    # @param [String] path path to a root folder with templates
+    # @param [Array<String>, String] path path to a root folder with templates
     # @param [String] conn DB connection or a cursor
     #
     def initialize(path, conn)
-      @path = path
+      @path = Array.wrap(path)
       @conn = conn
     end
 

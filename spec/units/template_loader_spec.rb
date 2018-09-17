@@ -16,6 +16,21 @@ RSpec.describe Eql::TemplateLoader do
         File.expand_path('../../fixtures/active_record/simple.sql.erb', __FILE__)
     end
 
+    context "with multiple paths" do
+      let(:path) do
+        [
+          File.expand_path('../../fixtures', __FILE__),
+          File.expand_path('../../fixtures/active_record', __FILE__),
+          File.expand_path('../..', __FILE__)
+        ]
+      end
+
+      it "should resolve path correctly " do
+        expect(loader.resolve_path(:simple)).to eq \
+          File.expand_path('../../fixtures/active_record/simple.sql.erb', __FILE__)
+      end
+    end
+
     it "should raise an error if can find tempale's file" do
       expect { loader.resolve_path(:unexisted) }.to raise_error(/unable to find/i)
     end
